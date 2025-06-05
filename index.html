@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="RefVNLI: Towards Scalable Evaluation of Subject-driven Text-to-image Generation">
+  <meta property="og:title" content="RefVNLI: Towards Scalable Evaluation of Subject-driven Text-to-image Generation"/>
+  <meta property="og:description" content="RefVNLI: Towards Scalable Evaluation of Subject-driven Text-to-image Generation"/>
+  <meta property="og:url" content="https://refvnli.github.io/"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="RefVNLI: Towards Scalable Evaluation of Subject-driven Text-to-image Generation">
+  <meta name="twitter:description" content="RefVNLI: Towards Scalable Evaluation of Subject-driven Text-to-image Generation">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/nitzangu_Albert_Einstein_holds_an_iphone_realistic_style_ba15ea7b-b829-478b-adef-b474ccf01a2a.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="Vision-and-Language Benchmark, Synthetic and Compositional Images">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>RefVNLI</title>
+  <link rel="icon" sizes="128x128" type="image/x-icon" href="static/images/logo1.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <style>
+    html {
+        scroll-behavior: smooth;
+    }
+    .light-background {
+      background-color: #9e9e9e0a;
+    }
+    /* Additional styles */
+  </style>
+</head>
+<body>
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">-->
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">RefVNLI: Towards Scalable Evaluation of<br>
+              Subject-driven Text-to-image Generation</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://lovodkin93.github.io/" target="_blank">Aviv Slobodkin</a><sup>* 1</sup>&nbsp; &nbsp;</span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/hagai-taitelbaum-674668130" target="_blank">Hagai Taitelbaum</a><sup>1</sup>&nbsp; &nbsp;</span>
+              <span class="author-block">
+                <a href="https://research.google/people/yonatanbitton" target="_blank">Yonatan Bitton</a><sup>1</sup>&nbsp; &nbsp;</span><br>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/brian-gordon-38b29bb1" target="_blank">Brian Gordon</a><sup>* 1</sup>&nbsp; &nbsp;</span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/michal-sokolik-869315129/" target="_blank">Michal Sokolik</a><sup>1</sup>&nbsp; &nbsp;</span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/nitzanguetta/" target="_blank">Nitzan Bitton Guetta</a><sup>2</sup>&nbsp; &nbsp;</span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/almoggueta" target="_blank">Almog Gueta</a><sup>1</sup>&nbsp; &nbsp;</span><br>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/royi-rassin-4b8085163" target="_blank">Royi Rassin</a><sup>* 1</sup>&nbsp; &nbsp;</span>
+              <span class="author-block">
+                <a href="https://www.cs.huji.ac.il/~danix/" target="_blank">Dani Lischinski</a><sup>1</sup>&nbsp; &nbsp;</span>
+              <span class="author-block">
+                <a href="https://research.google/people/105847" target="_blank">Idan Szpektor</a><sup>1</sup>&nbsp; &nbsp;</span>
+            </div>
+
+
+
+
+                  <div class="is-size-6 publication-authors">
+                    <span class="author-block"><sup>*</sup>Work done during an internship at Google Research</span><br>
+                    <span class="author-block"><sup>1</sup>Google Research&nbsp;&nbsp;</span>
+                    <span class="author-block"><sup>2</sup>Ben Gurion University</span><br>
+                      <br>
+                    <!-- Conference Logo Image - AVIVSL: add when relevant --> 
+                    <!-- <span class="author-block">
+                            <b>
+                                <img src="static/images/naacl_2024_logo-removebg-preview.png"  style="width: 70%; height: 70%" class="image-spacing"/>
+                            </b>
+
+                    </span> -->
+                  <br>
+                  </div>
+              <br>
+
+
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2504.17502" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            
+            <!-- Medium Link - TODO: AVIVSL -->
+            <!-- <span class="link-block">
+                  <a href="https://medium.com/@nitzanguetta/introducing-whoops-a-benchmark-of-commonsense-defying-synthetically-generated-images-6748268458e8" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Medium</span>
+                </a>
+              </span> -->
+
+                <!-- HuggingFace Link -->
+                <!-- <span class="link-block">
+                  <a href="https://huggingface.co/datasets/lovodkin93/FuseReviews" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <p style="font-size:20px">&#x1F917;</p>
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span> -->
+
+              <!-- Data Demonstration -->
+              <!-- <span class="link-block">
+                  <a href="#DatasetDemo"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <p style="font-size:20px">&#x1F50E;</p>
+                  </span>
+                  <span>Data Demonstration</span>
+                </a>
+              </span> -->
+              
+              <!-- huggingface spaces explorer -->
+              <!-- <span class="link-block">
+                  <a href="https://huggingface.co/spaces/lovodkin93/FuseReviews" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <p style="font-size:20px">&#x1F917;</p>
+                  </span>
+                  <span>Explorer</span>
+                </a>
+              </span> -->
+
+              <!-- task evaluation -->
+              <!-- <br />
+              <span class="link-block">
+                  <a href="https://colab.research.google.com/drive/1oUMbVNBMHxlZOg-tneq5_DVbW7X1mRt8?usp=sharing" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fa fa-code"></i>
+                  </span>
+                  <span>Evaluation</span>
+                </a>
+              </span> -->
+
+
+              <!-- Github Link -->
+                 <!-- &lt;!&ndash; Github link &ndash;&gt; -->
+                 <!-- <span class="link-block">
+                  <a href="https://github.com/fusereviews/multi-review-fusion-in-context" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span> -->
+
+              <!-- Leaderboard -->
+              <!-- <span class="link-block">
+                <a href="https://huggingface.co/spaces/lovodkin93/FuseReviews-Leaderboard" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <p style="font-size:20px">&#x1F917;</p>
+                </span>
+                <span>Leaderboard</span>
+              </a>
+            </span> -->
+
+
+
+              <!-- conference poster  - TODO: AVIVSL -->
+              <!-- <span class="link-block">
+                <a href="static/pdfs/whoops!_neurips_poster.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fa fa-file"></i>
+                  </span>
+                  <span>NeurIPS poster</span>
+                </a>
+              </span> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser -->
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img loading="lazy" src="static/images/teaser.png" style="max-width: 100%; width: 500px; height: auto;">
+    </div>
+  </div>
+</section> -->
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video autoplay="" muted="" loop="" playsinline="" width="100%">
+        <source src="static/images/animation_recording1.mov">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section class="section hero is-light is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h1 class="title is-size-2-tablet has-text-weight-bold">Abstract</h1>
+        <div class="content has-text-justified">
+          <p>
+            Subject-driven text-to-image (T2I) generation aims to produce images that align with a given textual description, while preserving the visual identity from a referenced subject image.
+            Despite its broad downstream applicability - ranging from enhanced personalization in image generation to consistent character representation in video rendering - progress in this field is limited by the lack of reliable automatic evaluation. Existing methods either assess only one aspect of the task (i.e., textual alignment or subject preservation), misalign with human judgments, or rely on costly API-based evaluation.
+            To address this gap, we introduce RefVNLI, a cost-effective metric that evaluates both textual alignment and subject preservation in a single run.
+            Trained on a large-scale dataset derived from video-reasoning benchmarks and image perturbations, RefVNLI outperforms or statistically matches existing baselines across multiple benchmarks and subject categories (e.g., <i>Animal</i>, <i>Object</i>), achieving up to 6.4-point gains in textual alignment and 5.9-point gains in subject preservation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+<!-- Data Collection -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+
+            <div class="content has-text-centered">
+              <h1 class="title is-size-2-tablet has-text-weight-bold mr-0 pt-3 pb-3">Data Collection</h1>
+              <p class="is-size-5-tablet">
+                To train RefVNLI, we collect a large scale dataset of <i>&lt; Image<sub>ref</sub> , prompt , Image<sub>tgt</sub> &gt;</i> triplets, each with two binary labels: one for <b>subject preservation</b> of <i>Image<sub>ref</sub></i> in <i>Image<sub>tgt</sub></i> , and one for <b>textual alignment</b> between the <i>prompt</i> and <i>Image<sub>tgt</sub></i> .
+                This involves first creating subject-driven <i>{ Image<sub>ref</sub> , Image<sub>tgt</sub> }</i> pairs, followed by automatic generation of subject-focused <i>prompts</i> for each <i>Image<sub>tgt</sub></i> .
+              </p>
+            </div>
+      
+      
+            <div id="results-carousel" class="carousel results-carousel">
+            <div class="item">
+              <h2 class="subtitle is-size-3-tablet has-text-weight-bold has-text-centered has-background-info-light mr-0 pt-3 pb-3">
+                1. Subject-drive Image-pairs:<br><u>Robustness</u> to Identity-agnostic Changes
+                </h2>
+                <p class="is-size-6-tablet has-text-centered pr-4 pl-4 pt-3 pb-3">
+                  To ensure our <i>{ Image<sub>ref</sub> , Image<sub>tgt</sub> }</i> dataset is robust to identity-agnostic changes (e.g., pose, clothing, or lighting changes), we use video-based datasets that inherently capture these differences.
+                  Specifically, given two pairs of frames, each extracted from distinct video scenes featuring the same entity (e.g.,<i>a</i> dog), where both frames within each pair depict the same subject (e.g., <i>the same</i> dog), we curate training <i>{ Image<sub>ref</sub> , Image<sub>tgt</sub> }</i> pairs for subject preservation classification.
+                  <b>Positive pairs</b> are formed by pairing a cropped subject from one frame (e.g., dog from left frame in Scene 1) with the full frame from the same scene (right frame in Scene 1). In contrast, <b>negative pairs</b> are created by pairing the cropped subject with the other scene's full frames (e.g., Scene 2). 
+                  This process is applied to all four frames, with each taking turns as the cropped reference image ( <i>Image<sub>ref</sub></i> ), while the corresponding full-frame counterparts serve as <i>Image<sub>tgt</sub></i> , yielding a total of 4 positive and 8 negative training pairs.
+                  In total, we collected 338,551 image pairs from 44,418 unique frames.
+                  <br><br>
+                  <div style="text-align: center;">
+                  <img src="static/images/scraping_videos.png"  style="width: 80%; height: 80%"/>
+                </div>
+                </p>
+            </div>
+      
+            <div class="item">
+              <h2 class="subtitle is-size-3-tablet has-text-weight-bold has-text-centered has-background-info-light mr-0 pt-3 pb-3">
+                2. Subject-drive Image-pairs:<br><u>Sensitivity</u> to Identity-specific Attributes
+                </h2>
+                <p class="is-size-6-tablet has-text-centered pr-4 pl-4 pt-3 pb-3">
+                To further enhance sensitivity to identity-specific attributes, such as facial features in humans or shapes and patterns in objects, we apply fine-grained corruptions on identity-defining visual attributes for additional hard-negatives.
+                Starting with an image and a mask of a subject (e.g., a bag), we randomly keep 5 patches within the masked area ([1]) and use them to create 5 inpainted versions ([2]). 
+                The version with the highest MSE between the altered and original areas (e.g., bottom image, MSE = 3983) is paired with the <i>unmodified</i> crop to form a <b>negative pair</b>, while the original image and the same crop create a <b>positive pair</b>, with the crop acting as Image<sub>ref</sub> in both cases.
+                This process yields extra 16,572 pairs.
+                <br><br>
+                <div style="text-align: center;">
+                  <img src="static/images/corrupting_images.png"  style="width: 80%; height: 80%"/>
+                </div>
+              </p>
+          </div>
+      
+          <div class="item">
+            <h2 class="subtitle is-size-3-tablet has-text-weight-bold has-text-centered has-background-info-light mr-0 pt-3 pb-3">
+              3. Image-prompt Pairs
+              </h2>
+              <p class="is-size-6-tablet has-text-centered pr-4 pl-4 pt-3 pb-3">
+              For each <i>{ Image<sub>ref</sub> , Image<sub>tgt</sub> }</i> pair, we generate positive and negative <i>prompts</i> for Image<sub>tgt</sub> .
+              Specifically, given an image with some subject (e.g., a dog), we create a <b>positive prompt</b> by adding a bounding box around the subject and directing an LLM to describe it (top prompts). <b>Negative prompts</b> are created by swapping prompts between images of the same entity (middle prompts). For additional <b>hard negatives</b>, we guide an LLM to modify a single non-subject detail in the positive prompts while keeping the rest unchanged (bottom prompts).
+              In total, combining this step with the two image-pairing steps yields 1.2 million <i>&lt; Image<sub>ref</sub> , prompt , Image<sub>tgt</sub> &gt;</i> triplets labeled for <i>textual alignment</i> and <i>subject preservation</i>.
+              <br><br>
+              <div style="text-align: center;">
+                <img src="static/images/caption_generation.png"  style="width: 70%; height: 70%"/>
+              </div>
+            </p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<!-- Image carousel -->
+<!-- <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      
+
+      <div class="content has-text-centered">
+        <h1 class="title is-size-2-tablet has-text-weight-bold mr-0 pt-3 pb-3">Data Collection</h1>
+        <p class="is-size-5-tablet">
+          To train RefVNLI, we collect a large scale dataset of <i>&lt; Image<sub>ref</sub> , prompt , Image<sub>tgt</sub> &gt;</i> triplets, each with two binary labels: one for <b>subject preservation</b> of <i>Image<sub>ref</sub></i> in <i>Image<sub>tgt</sub></i> , and one for <b>textual alignment</b> between the <i>prompt</i> and <i>Image<sub>tgt</sub></i> .
+          This involves first creating subject-driven <i>{ Image<sub>ref</sub> , Image<sub>tgt</sub> }</i> pairs, followed by automatic generation of subject-focused <i>prompts</i> for each <i>Image<sub>tgt</sub></i> .
+        </p>
+      </div>
+
+
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+         <h2 class="subtitle is-size-3-tablet has-text-weight-bold has-text-centered has-background-info-light mr-0 pt-3 pb-3">
+           1. Subject-drive Image-pairs:<br><u>Robustness</u> to Identity-agnostic Changes
+           </h2>
+           <p class="is-size-6-tablet has-text-centered pr-4 pl-4 pt-3 pb-3">
+            To ensure our <i>{ Image<sub>ref</sub> , Image<sub>tgt</sub> }</i> dataset is robust to identity-agnostic changes (e.g., pose, clothing, or lighting changes), we use video-based datasets that inherently capture these differences.
+            Specifically, given two pairs of frames, each extracted from distinct video scenes featuring the same entity (e.g.,<i>a</i> dog), where both frames within each pair depict the same subject (e.g., <i>the same</i> dog), we curate training <i>{ Image<sub>ref</sub> , Image<sub>tgt</sub> }</i> pairs for subject preservation classification.
+            <b>Positive pairs</b> are formed by pairing a cropped subject from one frame (e.g., dog from left frame in Scene 1) with the full frame from the same scene (right frame in Scene 1). In contrast, <b>negative pairs</b> are created by pairing the cropped subject with the other scene's full frames (e.g., Scene 2). 
+            This process is applied to all four frames, with each taking turns as the cropped reference image ( <i>Image<sub>ref</sub></i> ), while the corresponding full-frame counterparts serve as <i>Image<sub>tgt</sub></i> , yielding a total of 4 positive and 8 negative training pairs.
+            In total, we collected 338,551 image pairs from 44,418 unique frames.
+            <br><br>
+            <div style="text-align: center;">
+             <img src="static/images/scraping_videos.png"  style="width: 60%; height: 60%"/>
+           </div>
+          </p>
+      </div>
+
+      <div class="item">
+        <h2 class="subtitle is-size-3-tablet has-text-weight-bold has-text-centered has-background-info-light mr-0 pt-3 pb-3">
+          2. Subject-drive Image-pairs:<br><u>Sensitivity</u> to Identity-specific Attributes
+          </h2>
+          <p class="is-size-6-tablet has-text-centered pr-4 pl-4 pt-3 pb-3">
+          To further enhance sensitivity to identity-specific attributes, such as facial features in humans or shapes and patterns in objects, we apply fine-grained corruptions on identity-defining visual attributes for additional hard-negatives.
+          Starting with an image and a mask of a subject (e.g., a bag), we randomly keep 5 patches within the masked area ([1]) and use them to create 5 inpainted versions ([2]). 
+          The version with the highest MSE between the altered and original areas (e.g., bottom image, MSE = 3983) is paired with the <i>unmodified</i> crop to form a <b>negative pair</b>, while the original image and the same crop create a <b>positive pair</b>, with the crop acting as Image<sub>ref</sub> in both cases.
+          This process yields extra 16,572 pairs.
+          <br><br>
+           <div style="text-align: center;">
+            <img src="static/images/corrupting_images.png"  style="width: 60%; height: 60%"/>
+          </div>
+         </p>
+     </div>
+
+     <div class="item">
+      <h2 class="subtitle is-size-3-tablet has-text-weight-bold has-text-centered has-background-info-light mr-0 pt-3 pb-3">
+        3. Image-prompt Pairs
+        </h2>
+        <p class="is-size-6-tablet has-text-centered pr-4 pl-4 pt-3 pb-3">
+        For each <i>{ Image<sub>ref</sub> , Image<sub>tgt</sub> }</i> pair, we generate positive and negative <i>prompts</i> for Image<sub>tgt</sub> .
+        Specifically, given an image with some subject (e.g., a dog), we create a <b>positive prompt</b> by adding a bounding box around the subject and directing an LLM to describe it (top prompts). <b>Negative prompts</b> are created by swapping prompts between images of the same entity (middle prompts). For additional <b>hard negatives</b>, we guide an LLM to modify a single non-subject detail in the positive prompts while keeping the rest unchanged (bottom prompts).
+        In total, combining this step with the two image-pairing steps yields 1.2 million <i>&lt; Image<sub>ref</sub> , prompt , Image<sub>tgt</sub> &gt;</i> triplets labeled for <i>textual alignment</i> and <i>subject preservation</i>.
+        <br><br>
+         <div style="text-align: center;">
+          <img src="static/images/caption_generation.png"  style="width: 50%; height: 50%"/>
+        </div>
+       </p>
+   </div>
+  </div>
+</div>
+</div>
+</section> -->
+<!-- End image carousel -->
+
+
+
+<!-- Qualitative Results -->
+<section class="section hero is-light is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h1 class="title is-size-2-tablet has-text-weight-bold">Qualitative Results</h1>
+        <div class="content has-text-centered">
+          <p>
+            We compare RefVNLI with DreamBench++ (a metric that relies on API calls to LLMs) and CLIP (an embedding-based metric), both for <b>Subject Preservation (SP)</b> and for <b>Textual Alignment (TA)</b>. 
+            RefVNLI exhibits better robustness to identity-agnostic changes (SP), such as the zoomed-out parrot (top-middle) and the zoomed-out person with different attire (bottom-middle).  It is also more sensitive to identity-defining traits, penalizing changed facial features (left-most person) and mismatched object patterns (left and middle balloons).    
+            Additionally, RefVNLI excels at detecting text-image mismatches (TA), as seen in its penalization of the top-left image for lacking a waterfall.
+            <br><br>
+            <div style="text-align: center;">
+             <img src="static/images/qualitative_examples_text_and_image.png"  style="width: 100%; height: 100%"/>
+           </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Rare Entities -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h1 class="title is-size-2-tablet has-text-weight-bold">Rare Entities</h1>
+        <div class="content has-text-centered">
+          <p>
+            We test RefVNLI's ability to assess uncommon subjects (e.g., scientific animal names, lesser-known dishes). 
+            For that, we employ a dataset where human annotators compared image pairs, selecting the better one based on <b>Textual Alignment (TA)</b>, <b>Visual Quality (IQ)</b> (evaluating general depiction of the <i>entity</i> rather than exact reference-adherence), and <b>Overall Preference (OP)</b>. 
+            We compare RefVNLI with CLIP and DreamBench++ in aligning with human preferences (top rows of each example).
+            The higher of the two criterion-wise scores is emphasized unless both are equal. 
+            RefVNLI consistently aligns with human judgments across all three criteria.
+            <br><br>
+            <div style="text-align: center;">
+             <img src="static/images/rare_entities_ImageRAG.png"  style="width: 100%; height: 100%"/>
+           </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Paper -->
+<!-- <section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h1 class="title is-size-2-tablet has-text-weight-bold">Paper</h1>
+        <iframe  src="static/pdfs/RefVNLI_paper.pdf" width="100%" height="550">
+            </iframe>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title is-size-2-tablet has-text-centered has-text-weight-bold">Paper</h1>
+      <div class="has-text-centered">
+        <iframe  src="static/pdfs/RefVNLI_paper.pdf" width="80%" height="550">
+            </iframe>
+      </div>
+      </div>
+    </div>
+  </section>
+<!--End paper -->
+
+
+<!-- Leaderboard -->
+<!-- <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.21.0/gradio.js"></script>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="subtitle is-size-3-tablet has-text-weight-bold has-text-centered has-background-info-light mr-0 pt-3 pb-3">
+        Leaderboard
+        </h2>
+      <div class="columns is-centered has-text-centered">
+          <div class="publication-video">
+            
+            <iframe src="https://lovodkin93-fusereviews-leaderboard.hf.space" frameborder="0" width="850" height="450"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+</section> -->
+<!--End Leaderboard -->
+
+
+<!-- Data Explorer -->
+<!-- <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.19.2/gradio.js"></script>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="subtitle is-size-3-tablet has-text-weight-bold has-text-centered has-background-info-light mr-0 pt-3 pb-3">
+        Data Explorer
+        </h2>
+      <div class="columns is-centered has-text-centered">
+          <div class="publication-video">
+            
+            <iframe src="https://lovodkin93-fusereviews.hf.space" frameborder="0" width="850" height="450"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+</section> -->
+<!--End Data Explorer -->
+
+
+
+
+<!-- Paper poster - TODO: AVIVSL -->
+<!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title">Paper</h2>
+      <iframe  src="static/pdfs/WHOOPS_paper.pdf" width="100%" height="550">
+          </iframe>
+        
+      </div>
+    </div>
+  </section> -->
+<!--End paper poster -->
+
+<!-- Youtube video - TODO: AVIVSL -->
+<!-- <section class="hero is-small">
+    <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+          <div class="publication-video">
+            <iframe frameborder="0" width="850" height="450" src="https://www.youtube.com/embed/rMhc50PvDn4?autoplay=1&mute=1&loop=1"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+</section> -->
+
+<!-- Image carousel  - TODO: AVIVSL -->
+<!-- <section class="hero is-small  is-light">
+  <div class="hero-body">
+    <div class="container">
+        <h2 class="title">Poster Presentations</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+        <img src="static/images/NeurIPS presentation n.jpeg" alt="MY ALT TEXT" style="width: 50%; height: 50%" class="center_caro_img"/>
+        <h2 class="subtitle has-text-centered">
+          NeurIPs Creative AI.
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/NeurIPS presentation y.jpeg" alt="MY ALT TEXT" style="width: 50%; height: 50%" class="center_caro_img"/>
+        <h2 class="subtitle has-text-centered">
+          NeurIPs Creative AI.
+        </h2>
+      </div>
+  </div>
+</div>
+</div>
+</section> -->
+<!-- End image carousel -->
+
+
+<!--huggingface leaderboard - TODO: AVIVSL -->
+<!-- <script
+	type="module"
+	src="https://gradio.s3-us-west-2.amazonaws.com/3.36.1/gradio.js"></script>
+<section class="hero is-small">
+    <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+          <div class="publication-video">
+            <gradio-app src="https://nlphuji-whoops-leaderboard.hf.space"></gradio-app>
+          </div>
+        </div>
+      </div>
+    </div>
+</section> -->
+
+
+
+<!--BibTex citation -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{slobodkin2025refvnliscalableevaluationsubjectdriven,
+        title={RefVNLI: Towards Scalable Evaluation of Subject-driven Text-to-image Generation}, 
+        author={Aviv Slobodkin and Hagai Taitelbaum and Yonatan Bitton and Brian Gordon and Michal Sokolik and Nitzan Bitton Guetta and Almog Gueta and Royi Rassin and Itay Laish and Dani Lischinski and Idan Szpektor},
+        year={2025},
+        eprint={2504.17502},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV},
+        url={https://arxiv.org/abs/2504.17502}, 
+  }</code></pre>
+    </div>
+</section>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p style="color:gray;font-size:9.9px;">
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>, is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            <a href="https://www.flaticon.com/free-icons/magic" title="magic icons">Magic icons created by Freepik - Flaticon</a>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+  </html>
